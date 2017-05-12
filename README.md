@@ -31,3 +31,15 @@ module.xml
             <remote-naming/>
  </subsystem>
 ```
+
+3.  Add jboss-deployment-structure.xml file to WEB-INF
+```
+<?xml version="1.0"?>
+<jboss-deployment-structure>
+    <deployment>
+        <dependencies>
+            <module name="org.mongodb" export="true"/>
+        </dependencies>
+    </deployment>
+</jboss-deployment-structure>
+```
