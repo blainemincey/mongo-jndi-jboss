@@ -41,8 +41,7 @@ public class CustomerDAO {
 
             this.initializeCollection();
 
-        }
-        catch (NamingException ne) {
+        } catch (NamingException ne) {
             LOG.severe(ne.toString());
 
             ne.printStackTrace();
@@ -51,7 +50,6 @@ public class CustomerDAO {
 
 
     /**
-     *
      * @param mongoClient
      */
     public CustomerDAO(MongoClient mongoClient) {
@@ -74,7 +72,6 @@ public class CustomerDAO {
 
 
     /**
-     *
      * @param customer
      */
     public void insertOne(Customer customer) {
@@ -82,7 +79,7 @@ public class CustomerDAO {
         LOG.info("Inserting customer for fullName: " + customer.getFullName());
 
         Document document = new Document("fullName", customer.getFullName())
-                                 .append("age", customer.getAge());
+                .append("age", customer.getAge());
 
         myCollection.insertOne(document);
 
@@ -92,7 +89,6 @@ public class CustomerDAO {
     }
 
     /**
-     *
      * @param id
      * @return
      */
@@ -109,7 +105,6 @@ public class CustomerDAO {
     }
 
     /**
-     *
      * @param id
      * @return
      */
@@ -121,7 +116,7 @@ public class CustomerDAO {
 
         Document document = myCollection.find(eq("_id", new ObjectId(id))).first();
 
-        if(document != null && document.getObjectId("_id") != null) {
+        if (document != null && document.getObjectId("_id") != null) {
 
             LOG.info("Customer found for id: " + id);
 
@@ -136,7 +131,6 @@ public class CustomerDAO {
     }
 
     /**
-     *
      * @return
      */
     public List<Customer> findAll() {
@@ -147,11 +141,11 @@ public class CustomerDAO {
 
         FindIterable<Document> resultList = myCollection.find();
 
-        if(resultList != null) {
+        if (resultList != null) {
 
             customerList = new ArrayList<Customer>();
 
-            for( Document document : resultList ) {
+            for (Document document : resultList) {
 
                 Customer customer = new Customer();
                 customer.setId(document.getObjectId("_id").toString());
@@ -167,26 +161,24 @@ public class CustomerDAO {
     }
 
     /**
-     *
      * @param customer
      */
     public void updateOne(Customer customer) {
 
         LOG.info("Updating customer for id: " + customer.getId());
 
-        UpdateResult update1 = myCollection.updateOne(eq("_id",new ObjectId(customer.getId())),
+        UpdateResult update1 = myCollection.updateOne(eq("_id", new ObjectId(customer.getId())),
                 new Document("$set", new Document("fullName", customer.getFullName())));
 
-        UpdateResult update2 = myCollection.updateOne(eq("_id",new ObjectId(customer.getId())),
+        UpdateResult update2 = myCollection.updateOne(eq("_id", new ObjectId(customer.getId())),
                 new Document("$set", new Document("age", customer.getAge())));
 
 
-
-        if(update1.getModifiedCount() > 0){
-            LOG.info("Full Name updated to: " + customer.getFullName() );
+        if (update1.getModifiedCount() > 0) {
+            LOG.info("Full Name updated to: " + customer.getFullName());
         }
 
-        if(update2.getModifiedCount() > 0){
+        if (update2.getModifiedCount() > 0) {
             LOG.info("Age updated to: " + customer.getAge());
         }
     }

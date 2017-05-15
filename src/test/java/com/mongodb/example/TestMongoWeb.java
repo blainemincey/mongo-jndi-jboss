@@ -21,6 +21,7 @@ public class TestMongoWeb {
 
     /**
      * Set up MongoDB for testing
+     *
      * @throws Exception
      */
     @Before
