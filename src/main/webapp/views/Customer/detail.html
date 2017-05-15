@@ -1,0 +1,33 @@
+<header ng-switch on="$location.path().indexOf('/Customers/new') > -1">
+    <h3 ng-switch-when="true">Create a new Customer</h3>
+    <h3 ng-switch-when="false">View or edit Customer</h3>
+</header>
+<form id="CustomerForm" name="CustomerForm" class="form-horizontal" role="form">
+    
+
+    <div class="form-group" ng-class="{'has-error': CustomerForm.fullName.$invalid}">
+        <label for="fullName" class="col-sm-2 control-label">Full Name</label>
+        <div id="fullNameControls" class="col-sm-10">
+            <input id="fullName" name="fullName" type="text" required class="form-control" ng-model="customer.fullName" placeholder="Enter the Customer Full Name"></input>
+            <span class="help-block error" ng-show="CustomerForm.fullName.$error.required">required</span> 
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': CustomerForm.age.$invalid}">
+        <label for="age" class="col-sm-2 control-label">Age</label>
+        <div id="ageControls" class="col-sm-10">
+            <input id="age" name="age" type="number" min="0" class="form-control" ng-model="customer.age" placeholder="Enter the Customer Age"></input>
+            <span class="help-block error" ng-show="CustomerForm.age.$error.number">not a number</span>
+            <span class="help-block error" ng-show="CustomerForm.age.$error.min">minimum allowed is 0</span>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button id="saveCustomer" name="saveCustomer" class="btn btn-primary" ng-disabled="isClean() || CustomerForm.$invalid" ng-click="save()"><span class="glyphicon glyphicon-ok-sign"></span> Save</button>
+            <button id="cancel" name="cancel" class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove-sign"></span> Cancel</button>
+            <button id="deleteCustomer" name="deleteCustomer" class="btn btn-danger" ng-show="customer.id" ng-click="remove()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+        </div>
+    </div>
+</form>
